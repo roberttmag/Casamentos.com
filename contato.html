@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casamentos.com</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src="SVG/7.jpg" width="30" height="30" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="quemsomos.html">Quem Somos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contato.html">Contato</a>
+            </li>
+          </ul>
+      
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+      <div class="container my-5">
+        <h2>Entre em Contato</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone:</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="state">Estado:</label>
+                <select class="form-control" id="state" name="state" required>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensagem:</label>
+                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-light">Enviar</button>
+        </form>
+    </div>
+    <div class="containermapa">
+    <div class="mapa">
+        <h1>Localização</h1>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31114.49875600252!2d-38.297929!3d-12.8876262!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7163de02f254a09%3A0x32fbed0f9aaca065!2sBarraca%20Buraco%20Da%20Velha!5e0!3m2!1spt-BR!2sbr!4v1716854667523!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</div>
+    
+    
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">© Casamentos para Você</span>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/distritos')
+            .then(function (response) {
+                var states = response.data.map(function (district) {
+                    return district.municipio.microrregiao.mesorregiao.UF.nome;
+                });
+                states = [...new Set(states)]; 
+                states.forEach(function (state) {
+                    $('#state').append($('<option>', {
+                        value: state,
+                        text: state
+                    }));
+                });
+            })
+            .catch(function (error) {
+                console.error('Erro ao carregar os estados:', error);
+            });
+    </script>
+    </body>
+    </html>
